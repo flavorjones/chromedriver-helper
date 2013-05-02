@@ -1,6 +1,11 @@
 Changelog
 ==========
 
+0.0.6 - 02 May 2013
+
+* Changed to download chromedriver2 instead of chromedriver
+
+
 0.0.5 - 15 Aug 2012
 ----------
 

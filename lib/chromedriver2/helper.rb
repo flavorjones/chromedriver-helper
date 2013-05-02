@@ -1,5 +1,5 @@
-require "chromedriver/helper/version"
-require "chromedriver/helper/google_code_parser"
+require "chromedriver2/helper/version"
+require "chromedriver2/helper/google_code_parser"
 require 'fileutils'
 require 'open-uri'
 require 'rbconfig'
@@ -33,7 +33,7 @@ module Chromedriver
 
     def download_url
       downloads = GoogleCodeParser.new(open(DOWNLOAD_URL)).downloads
-      url = downloads.grep(/chromedriver_#{platform}_.*\.zip/).first
+      url = downloads.grep(/chromedriver2_#{platform}_.*\.zip/).first
       url = "http:#{url}" if url !~ /^http/
       url
     end
@@ -49,7 +49,7 @@ module Chromedriver
     end
 
     def install_dir
-      dir = File.expand_path File.join(ENV['HOME'], ".chromedriver-helper")
+      dir = File.expand_path File.join(ENV['HOME'], ".chromedriver2-helper")
       FileUtils.mkdir_p dir
       dir
     end
@@ -59,7 +59,7 @@ module Chromedriver
       case cfg['host_os']
       when /linux/ then
         cfg['host_cpu'] =~ /x86_64|amd64/ ? "linux64" : "linux32"
-      when /darwin/ then "mac"
+      when /darwin/ then "mac32"
       else "win"
       end
     end

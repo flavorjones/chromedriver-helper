@@ -1,5 +1,5 @@
 #! /usr/bin/env ruby
 
-require "chromedriver/helper"
+require "chromedriver2/helper"
 
 Chromedriver::Helper.new.run *ARGV

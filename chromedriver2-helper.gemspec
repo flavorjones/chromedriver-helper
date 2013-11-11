@@ -7,9 +7,9 @@ Gem::Specification.new do |s|
   s.version     = Chromedriver::Helper::VERSION
   s.authors     = ["Mike Dalessio","Zsolt Sztupak"]
   s.email       = ["mike@csa.net","mail@sztupy.hu"]
-  s.homepage    = ""
+  s.homepage    = "https://github.com/sztupy/chromedriver-helper"
   s.summary     = "Easy installation and use of chromedriver2, the Chromium project's selenium webdriver adapter."
-  s.description = "Easy installation and use of chromedriver2, the Chromium project's selenium webdriver adapter."
+  s.description = "Downloads and installs chromedriver2 from google's page and uses it for running the selenium tests. Contains fixes for mac builds, and changes to the google URLs"
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

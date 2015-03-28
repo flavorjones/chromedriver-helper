@@ -14,6 +14,7 @@ module Chromedriver
     end
 
     def download hit_network=false
+      return if preexisting_installation
       return if File.exists?(binary_path) && ! hit_network
       url = download_url
       filename = File.basename url
@@ -40,11 +41,17 @@ module Chromedriver
     end
 
     def binary_path
+      return preexisting_installation if preexisting_installation
       if platform == "win"
         File.join platform_install_dir, "chromedriver.exe"
       else
         File.join platform_install_dir, "chromedriver"
       end
+    end
+
+    def preexisting_installation
+      require 'mkmf'
+      find_executable 'chromedriver'
     end
 
     def platform_install_dir

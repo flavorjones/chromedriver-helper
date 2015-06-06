@@ -5,24 +5,22 @@ describe Chromedriver::Helper do
 
   describe "#binary_path" do
     context "preexisting installation" do
-      before { allow(helper).to receive(:preexisting_installation) { "/usr/local/bin/chromedriver" } }
-      it { expect(helper.binary_path).to match(/chromedriver$/) }
+      before { allow(helper).to receive(:preexisting_installation) { "/imaginary/path/to/chromedriver" } }
+      it { expect(helper.binary_path).to eq("/imaginary/path/to/chromedriver") }
     end
 
-    context "on a linux platform" do
-      before do
-        allow(helper).to receive(:preexisting_installation).and_return(nil)
-        allow(helper).to receive(:platform) { "linux32" }
-      end
-      it { expect(helper.binary_path).to match(/chromedriver$/) }
-    end
+    context "no preexisting installation" do
+      before { allow(helper).to receive(:preexisting_installation).and_return(nil) }
 
-    context "on a windows platform" do
-      before do
-        allow(helper).to receive(:preexisting_installation).and_return(nil)
-        allow(helper).to receive(:platform) { "win" }
+      context "on a linux platform" do
+        before { allow(helper).to receive(:platform) { "linux32" } }
+        it { expect(helper.binary_path).to match(/chromedriver$/) }
       end
-      it { expect(helper.binary_path).to match(/chromedriver\.exe$/) }
+
+      context "on a windows platform" do
+        before { allow(helper).to receive(:platform) { "win" } }
+        it { expect(helper.binary_path).to match(/chromedriver\.exe$/) }
+      end
     end
   end
 end

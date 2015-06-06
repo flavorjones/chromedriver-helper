@@ -43,15 +43,15 @@ module Chromedriver
 
     def binary_path
       return preexisting_installation if preexisting_installation
-      if platform == "win"
-        File.join platform_install_dir, "chromedriver.exe"
-      else
-        File.join platform_install_dir, "chromedriver"
-      end
+      File.join platform_install_dir, binary_name
+    end
+
+    def binary_name
+      platform == "win" ? "chromedriver.exe" : "chromedriver"
     end
 
     def preexisting_installation
-      find_executable0 'chromedriver'
+      find_executable0 binary_name
     end
 
     def platform_install_dir

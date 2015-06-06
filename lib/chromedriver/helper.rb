@@ -4,6 +4,7 @@ require 'fileutils'
 require 'rbconfig'
 require 'open-uri'
 require 'archive/zip'
+require 'mkmf'
 
 module Chromedriver
   class Helper
@@ -50,8 +51,7 @@ module Chromedriver
     end
 
     def preexisting_installation
-      require 'mkmf'
-      find_executable 'chromedriver'
+      find_executable0 'chromedriver'
     end
 
     def platform_install_dir

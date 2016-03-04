@@ -10,8 +10,8 @@ module Chromedriver
 
     def run *args
       download
-      compatibility
-      exec binary_path, *args
+      p compatibility + binary_path
+      exec compatibility + binary_path, *args
     end
 
     def download hit_network=false
@@ -44,9 +44,10 @@ module Chromedriver
           unless `$LD_LIBRARY_PATH`.empty?
              cmd += ":$LD_LIBRARY_PATH"
           end
-          `LD_LIBRARY_PATH=#{cmd}; export LD_LIBRARY_PATH`
+          "LD_LIBRARY_PATH=#{cmd} "
         end
       end
+      ""
     end
 
     def download_url

@@ -10,7 +10,7 @@ module Chromedriver
 
     def run *args
       download
-      exec "#{compatibility} #{binary_path}", *args
+      exec "#{compatibility} #{binary_path} #{args.join(' ')}"
     end
 
     def download hit_network=false

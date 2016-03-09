@@ -43,7 +43,7 @@ module Chromedriver
           unless `echo $LD_LIBRARY_PATH`.empty?
             path += ":$LD_LIBRARY_PATH"
           end
-          return "LD_LIBRARY_PATH=#{path}"
+          return "LD_LIBRARY_PATH=#{path} DBUS_SESSION_BUS_ADDRESS=/dev/null"
         end
       end
       ""

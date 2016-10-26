@@ -13,8 +13,8 @@ module Chromedriver
       exec binary_path, *args
     end
 
-    def download hit_network=false
-      return if File.exists?(binary_path) && ! hit_network
+    def download(hit_network = false)
+      return if File.exists?(binary_path) && !hit_network
       url = download_url
       filename = File.basename url
       Dir.chdir platform_install_dir do

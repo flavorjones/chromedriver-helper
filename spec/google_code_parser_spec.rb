@@ -27,11 +27,11 @@ describe Chromedriver::Helper::GoogleCodeParser do
     context "out-of-order versions" do
       before do
         allow(parser).to receive(:downloads).and_return([
-            "http://chromedriver.storage.googleapis.com/2.3/chromedriver_mac32.zip",
-            "http://chromedriver.storage.googleapis.com/2.4/chromedriver_mac32.zip",
-            "http://chromedriver.storage.googleapis.com/2.14/chromedriver_mac32.zip",
-            "http://chromedriver.storage.googleapis.com/2.2/chromedriver_mac32.zip",
-          ])
+          "http://chromedriver.storage.googleapis.com/2.3/chromedriver_mac32.zip",
+          "http://chromedriver.storage.googleapis.com/2.4/chromedriver_mac32.zip",
+          "http://chromedriver.storage.googleapis.com/2.14/chromedriver_mac32.zip",
+          "http://chromedriver.storage.googleapis.com/2.2/chromedriver_mac32.zip",
+        ])
       end
 
       it "returns the newest version" do

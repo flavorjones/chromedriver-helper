@@ -35,7 +35,15 @@ then, in your specs:
     end
 
 
-# Updating Chromedriver
+# Specifying a version
+
+If you want to run a specific version of chromedriver, you can set the version like so:
+
+    Chromedriver.configure do |configure|
+      configure.version = "2.24"
+    end
+
+# Updating to latest Chromedriver
 
 If you'd like to force-upgrade to the latest version of chromedriver,
 run the script `chromedriver-update` that also comes packaged with
@@ -46,7 +54,6 @@ which has been known to introduce incompatibilities with older
 versions of chromedriver (see
 [Issue #3](https://github.com/flavorjones/chromedriver-helper/issues/3)
 for an example).
-
 
 # Support
 

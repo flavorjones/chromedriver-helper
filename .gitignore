@@ -3,3 +3,5 @@
 Gemfile.lock
 pkg/*
 chromedriver.log
+.tags
+.chromedriver-version

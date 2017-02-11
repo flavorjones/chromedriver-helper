@@ -39,7 +39,7 @@ then, in your specs:
 
 If you want to run a specific version of chromedriver, you can set the version like so:
 
-    Chromedriver.set_version = "2.24"
+    Chromedriver.set_version "2.24"
 
 # Updating to latest Chromedriver
 

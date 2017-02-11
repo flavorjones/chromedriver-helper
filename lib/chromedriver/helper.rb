@@ -68,7 +68,7 @@ module Chromedriver
     end
 
     def version_path
-      @version_path ||= File.join(File.expand_path("..", Chromedriver.root), ".chromedriver-version")
+      @version_path ||= File.join(base_install_dir, ".chromedriver-version")
     end
 
     def binary_path
@@ -80,15 +80,23 @@ module Chromedriver
     end
 
     def platform_install_dir
-      dir = File.join install_dir, platform
+      dir = File.join version_install_dir, platform
       FileUtils.mkdir_p dir
       dir
     end
 
-    def install_dir
-      dir = File.expand_path File.join(ENV['HOME'], ".chromedriver-helper", download_version)
+    def version_install_dir
+      dir = File.expand_path File.join(base_install_dir, download_version)
       FileUtils.mkdir_p dir
       dir
+    end
+
+    def base_install_dir
+      @base_install_dir ||= begin
+        dir = File.expand_path File.join(ENV['HOME'], ".chromedriver-helper")
+        FileUtils.mkdir_p dir
+        dir
+      end
     end
 
     def platform

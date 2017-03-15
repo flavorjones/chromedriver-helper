@@ -11,8 +11,13 @@ module Chromedriver
   end
 
   class Helper
+    def initialize base_install_dir: nil
+      @base_install_dir = base_install_dir || ENV['CHROMEDRIVER_HELPER_ROOT']
+    end
+
     def run(*args)
       download
+      STDERR.puts binary_path
       exec binary_path, *args
     end
 

@@ -41,6 +41,11 @@ If you want to run a specific version of chromedriver, you can set the version l
 
     Chromedriver.set_version "2.24"
 
+Or, from the command line, you can run
+
+    chromedriver-update 2.24
+
+
 # Updating to latest Chromedriver
 
 If you'd like to force-upgrade to the latest version of chromedriver,

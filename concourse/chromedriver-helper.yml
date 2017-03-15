@@ -1,0 +1,77 @@
+resources:
+  - name: ci
+    type: git
+    source:
+      uri: https://github.com/flavorjones/chromedriver-helper/
+      branch: master
+      disable_ci_skip: true # always get the latest pipeline configuration
+  - name: chromedriver-helper
+    type: git
+    source:
+      uri: https://github.com/flavorjones/chromedriver-helper/
+      branch: master
+      ignore_paths:
+        - concourse/**
+  - name: nokogiri-ci
+    type: git
+    source:
+      uri: https://github.com/sparklemotion/nokogiri/
+      branch: master
+      ignore_paths:
+        - concourse/**
+
+jobs:
+  <% ruby_version = RUBIES[:mri].last %>
+  - name: ruby-<%= ruby_version %>
+    public: true
+    plan:
+      - get: ci
+      - get: chromedriver-helper
+        trigger: true
+      - task: rake-test
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source: {repository: ruby, tag: "<%= ruby_version %>"}
+          inputs:
+            - name: ci
+            - name: chromedriver-helper
+          run:
+            path: ci/concourse/tasks/rake-test/run.sh
+
+  - name: windows-install-ruby-2.3
+    public: true
+    serial_groups: [windows-configuration]
+    plan:
+      - get: nokogiri-ci
+      - get: chromedriver-helper
+        trigger: true
+      - task: setup
+        config:
+          platform: windows
+          inputs:
+            - name: nokogiri-ci
+              path: ci
+          run:
+            path: powershell
+            args: ["-File", "ci/concourse/tasks/windows-config/install-ruby-and-devkit.ps1"]
+
+  - name: ruby-2.3-devkit
+    public: true
+    plan:
+      - get: ci
+      - get: nokogiri-ci
+      - get: chromedriver-helper
+        trigger: true
+        passed: ["windows-install-ruby-2.3"]
+      - task: rake-test
+        config:
+          platform: windows
+          inputs:
+            - name: ci
+            - name: nokogiri-ci
+            - name: chromedriver-helper
+          run:
+            path: powershell
+            args: ["-File", "ci/concourse/tasks/rake-test/run.ps1"]

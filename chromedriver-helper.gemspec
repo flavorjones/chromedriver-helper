@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.description = "Easy installation and use of chromedriver, the Chromium project's selenium webdriver adapter."
   s.licenses    = ["MIT"]
 
-  if Dir.exist? ".git"
+  if Dir.exist? ".git" && ! windows?
     s.files         = `git ls-files`.split("\n")
     s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
     s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }

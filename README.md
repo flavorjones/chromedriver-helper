@@ -35,18 +35,29 @@ then, in your specs:
     end
 
 
-# Updating Chromedriver
+# Specifying a version
 
-If you'd like to force-upgrade to the latest version of chromedriver,
-run the script `chromedriver-update` that also comes packaged with
-this gem.
+If you want to run a specific version of chromedriver, you can set the version like so:
+
+    Chromedriver.set_version "2.24"
+
+Or, from the command line, you can run
+
+    chromedriver-update 2.24
+
+
+# Updating to latest Chromedriver
+
+If you'd like to force-upgrade to the latest version of chromedriver:
+
+1. delete the directory `$HOME/.chromedriver-helper`
+2. run `chromedriver-update`
 
 This might be necessary on platforms on which Chrome auto-updates,
 which has been known to introduce incompatibilities with older
 versions of chromedriver (see
 [Issue #3](https://github.com/flavorjones/chromedriver-helper/issues/3)
 for an example).
-
 
 # Support
 

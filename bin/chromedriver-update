@@ -2,4 +2,4 @@
 
 require "chromedriver/helper"
 
-Chromedriver::Helper.new.update
+Chromedriver::Helper.new.update(ARGV[0])

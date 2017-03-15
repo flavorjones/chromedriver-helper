@@ -2,4 +2,4 @@
 
 require "chromedriver/helper"
 
-Chromedriver::Helper.new.run *ARGV
+Chromedriver::Helper.new.run(*ARGV)

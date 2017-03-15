@@ -14,14 +14,21 @@ module Chromedriver
       end
 
       def downloads
-        doc = Nokogiri::XML.parse(source)
-        items = doc.css("Contents Key").collect {|k| k.text }
-        items.reject! {|k| !(/chromedriver_#{platform}/===k) }
-        items.map {|k| "#{BUCKET_URL}/#{k}"}
+        @downloads ||= begin
+          doc = Nokogiri::XML.parse(source)
+          items = doc.css("Contents Key").collect {|k| k.text }
+          items.reject! {|k| !(/chromedriver_#{platform}/===k) }
+          items.map {|k| "#{BUCKET_URL}/#{k}"}
+        end
       end
 
-      def newest_download
-        (downloads.sort { |a, b| version_of(a) <=> version_of(b)}).last
+      def newest_download_version
+        @newest_download_version ||= downloads.map { |download| version_of(download) }.max
+      end
+
+      def version_download_url(version)
+        gem_version = Gem::Version.new(version)
+        downloads.find { |download_url| version_of(download_url) == gem_version }
       end
 
       private

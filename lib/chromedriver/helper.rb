@@ -52,11 +52,13 @@ module Chromedriver
     end
 
     def current_version
-      @current_version ||= FileUtils.touch(version_path) && File.read(version_path).strip
+      @current_version ||= if File.exist?(version_path)
+                             File.read(version_path).strip
+                           end
     end
 
     def download_version
-      @download_version ||= current_version || google_code_parser.newest_download_version
+      @download_version ||= current_version || google_code_parser.newest_download_version.to_s
     end
 
     def download_url

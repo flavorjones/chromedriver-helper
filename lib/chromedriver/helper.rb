@@ -6,10 +6,6 @@ require 'open-uri'
 require 'archive/zip'
 
 module Chromedriver
-  def self.root
-    File.dirname __dir__
-  end
-
   def self.set_version(version)
     Chromedriver::Helper.new.update(version)
   end

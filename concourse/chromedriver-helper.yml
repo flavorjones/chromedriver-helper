@@ -5,17 +5,18 @@ resources:
       uri: https://github.com/flavorjones/chromedriver-helper/
       branch: master
       disable_ci_skip: true # always get the latest pipeline configuration
-  - name: chromedriver-helper
-    type: git
-    source:
-      uri: https://github.com/flavorjones/chromedriver-helper/
-      branch: master
-      ignore_paths:
-        - concourse/**
+
   - name: nokogiri-ci
     type: git
     source:
       uri: https://github.com/sparklemotion/nokogiri/
+      branch: master
+      disable_ci_skip: true # always get the latest pipeline configuration
+
+  - name: chromedriver-helper
+    type: git
+    source:
+      uri: https://github.com/flavorjones/chromedriver-helper/
       branch: master
       ignore_paths:
         - concourse/**

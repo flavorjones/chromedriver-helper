@@ -16,10 +16,12 @@ Gem::Specification.new do |s|
   s.description = "Easy installation and use of chromedriver, the Chromium project's selenium webdriver adapter."
   s.licenses    = ["MIT"]
 
-  if Dir.exist?(".git") && ! windows?
+  begin
     s.files         = `git ls-files`.split("\n")
     s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
     s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
+  rescue Exception => e
+    warn "WARNING: could not set spec.files: #{e.class}: #{e}"
   end
   s.require_paths = ["lib"]
 

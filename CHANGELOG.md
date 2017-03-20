@@ -1,5 +1,13 @@
-Changelog
+chromedriver-helper changelog
 ==========
+
+1.1.0 - 2017-03-19
+----------
+
+Features:
+
+* Allow user to choose what version of chromedriver runs. [#34] (Thanks, @jonny5!)
+
 
 1.0.0 - 2015-06-06
 ----------

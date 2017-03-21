@@ -13,6 +13,7 @@ module Chromedriver
   class Helper
     def run(*args)
       download
+      compatibility
       exec binary_path, *args
     end
 
@@ -55,6 +56,19 @@ module Chromedriver
 
     def download_version
       @download_version ||= current_version || google_code_parser.newest_download_version.to_s
+    end
+
+    def compatibility
+      if File.exists?("/usr/lib64/libstdc++.so.6")
+        if `strings /usr/lib64/libstdc++.so.6 | grep -e 'GLIBC.*3.4.15'`.empty?
+          chrome_dir = File.dirname(%x(readlink -f "`which google-chrome`").chomp)
+          cmd = "#{chrome_dir}:#{chrome_dir}/lib"
+          unless `$LD_LIBRARY_PATH`.empty?
+             cmd += ":$LD_LIBRARY_PATH"
+          end
+          `LD_LIBRARY_PATH=#{cmd}; export LD_LIBRARY_PATH`
+        end
+      end
     end
 
     def download_url

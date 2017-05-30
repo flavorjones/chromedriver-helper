@@ -78,14 +78,7 @@ chromedriver: /usr/lib64/libstdc++.so.6: version `GLIBCXX_3.4.14' not found (req
 
 ```
 
-You can get `chromedriver` to work on these systems by running the `install_chrome.sh` script on the page linked to above, and then making sure your `chromedriver` process has `LD_LIBRARY_PATH` set so that `/opt/google/chrome/lib` is present, e.g.
-
-```
-$ LD_LIBRARY_PATH=/opt/google/chrome/lib chromedriver
-Starting ChromeDriver 2.28.455506 (18f6627e265f442aeec9b6661a49fe819aeeea1f) on port 9515
-Only local connections are allowed.
-
-```
+You can get `chromedriver` to work on these systems by running the `install_chrome.sh` script on the page linked to above. Please note dat Chrome versions from 59 onward are not available on CentOS 6.
 
 # License
 

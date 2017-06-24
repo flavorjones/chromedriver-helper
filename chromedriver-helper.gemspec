@@ -30,5 +30,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "concourse", "~> 0.12"
 
   s.add_runtime_dependency "nokogiri",      "~> 1.6"
-  s.add_runtime_dependency "archive-zip",   "~> 0.7.0"
+  s.add_runtime_dependency "archive-zip",   "~> 0.7"
 end

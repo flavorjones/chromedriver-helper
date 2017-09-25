@@ -6,13 +6,6 @@ resources:
       branch: master
       disable_ci_skip: true # always get the latest pipeline configuration
 
-  - name: nokogiri-ci
-    type: git
-    source:
-      uri: https://github.com/sparklemotion/nokogiri/
-      branch: master
-      disable_ci_skip: true # always get the latest pipeline configuration
-
   - name: chromedriver-helper
     type: git
     source:
@@ -21,8 +14,8 @@ resources:
       ignore_paths:
         - concourse/**
 
+% ruby_version = RUBIES[:mri].last
 jobs:
-  <% ruby_version = RUBIES[:mri].last %>
   - name: ruby-<%= ruby_version %>
     public: true
     plan:
@@ -41,38 +34,21 @@ jobs:
           run:
             path: ci/concourse/tasks/rake-test/run.sh
 
-  - name: windows-install-ruby-2.3
-    public: true
-    serial_groups: [windows-configuration]
-    plan:
-      - get: nokogiri-ci
-      - get: chromedriver-helper
-        trigger: true
-      - task: setup
-        config:
-          platform: windows
-          inputs:
-            - name: nokogiri-ci
-              path: ci
-          run:
-            path: powershell
-            args: ["-File", "ci/concourse/tasks/windows-config/install-ruby-and-devkit.ps1"]
-
-  - name: ruby-2.3-devkit
+% ruby_version = RUBIES[:windows].last
+  - name: win-ruby-<%= ruby_version %>-devkit
     public: true
     plan:
       - get: ci
-      - get: nokogiri-ci
       - get: chromedriver-helper
         trigger: true
-        passed: ["windows-install-ruby-2.3"]
       - task: rake-test
         config:
           platform: windows
           inputs:
             - name: ci
-            - name: nokogiri-ci
             - name: chromedriver-helper
+          params:
+            WIN_RUBY_VERSION: "<%= ruby_version %>"
           run:
             path: powershell
             args: ["-File", "ci/concourse/tasks/rake-test/run.ps1"]

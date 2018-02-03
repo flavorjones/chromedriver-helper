@@ -1,6 +1,21 @@
 chromedriver-helper changelog
 ==========
 
+1.2.0 - 2018-02-03
+----------
+
+Dependencies:
+
+* Bump dependencies on `nokogiri` and `archive-zip. (Thanks, @odlp and @ksylvest!)
+
+
+Bug fixes:
+
+* Use `https` for the URL used to download. [#41] (Thanks, @saraid!)
+* Better platform detection, no longer run Windows on unrecognized platforms. [#49] (Thanks, @duncan-bayne!)
+
+
+
 1.1.0 - 2017-03-19
 ----------
 

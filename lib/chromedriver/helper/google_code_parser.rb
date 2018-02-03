@@ -4,7 +4,7 @@ require 'open-uri'
 module Chromedriver
   class Helper
     class GoogleCodeParser
-      BUCKET_URL = 'http://chromedriver.storage.googleapis.com'
+      BUCKET_URL = 'https://chromedriver.storage.googleapis.com'
 
       attr_reader :source, :platform
 

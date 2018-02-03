@@ -11,11 +11,11 @@ describe Chromedriver::Helper::GoogleCodeParser do
   describe "#downloads" do
     it "returns an array of URLs for the platform" do
       expect(parser.downloads).to eq [
-        "http://chromedriver.storage.googleapis.com/2.0/chromedriver_mac32.zip",
-        "http://chromedriver.storage.googleapis.com/2.1/chromedriver_mac32.zip",
-        "http://chromedriver.storage.googleapis.com/2.2/chromedriver_mac32.zip",
-        "http://chromedriver.storage.googleapis.com/2.3/chromedriver_mac32.zip",
-        "http://chromedriver.storage.googleapis.com/2.4/chromedriver_mac32.zip"]
+        "https://chromedriver.storage.googleapis.com/2.0/chromedriver_mac32.zip",
+        "https://chromedriver.storage.googleapis.com/2.1/chromedriver_mac32.zip",
+        "https://chromedriver.storage.googleapis.com/2.2/chromedriver_mac32.zip",
+        "https://chromedriver.storage.googleapis.com/2.3/chromedriver_mac32.zip",
+        "https://chromedriver.storage.googleapis.com/2.4/chromedriver_mac32.zip"]
     end
   end
 
@@ -27,10 +27,10 @@ describe Chromedriver::Helper::GoogleCodeParser do
     context "out-of-order versions" do
       before do
         allow(parser).to receive(:downloads).and_return([
-          "http://chromedriver.storage.googleapis.com/2.3/chromedriver_mac32.zip",
-          "http://chromedriver.storage.googleapis.com/2.4/chromedriver_mac32.zip",
-          "http://chromedriver.storage.googleapis.com/2.14/chromedriver_mac32.zip",
-          "http://chromedriver.storage.googleapis.com/2.2/chromedriver_mac32.zip",
+          "https://chromedriver.storage.googleapis.com/2.3/chromedriver_mac32.zip",
+          "https://chromedriver.storage.googleapis.com/2.4/chromedriver_mac32.zip",
+          "https://chromedriver.storage.googleapis.com/2.14/chromedriver_mac32.zip",
+          "https://chromedriver.storage.googleapis.com/2.2/chromedriver_mac32.zip",
         ])
       end
 
@@ -42,7 +42,7 @@ describe Chromedriver::Helper::GoogleCodeParser do
 
   describe '#version_download_url' do
     it 'returns the version asked for' do
-      expect(parser.version_download_url(2.0)).to eq "http://chromedriver.storage.googleapis.com/2.0/chromedriver_mac32.zip"
+      expect(parser.version_download_url(2.0)).to eq "https://chromedriver.storage.googleapis.com/2.0/chromedriver_mac32.zip"
     end
   end
 end

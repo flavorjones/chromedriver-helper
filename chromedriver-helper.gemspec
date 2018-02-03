@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "rspec",     "~> 3.0"
   s.add_development_dependency "rake",      "~> 10.0"
-  s.add_development_dependency "concourse", "~> 0.12"
+  s.add_development_dependency "concourse", "~> 0.16"
 
   s.add_runtime_dependency "nokogiri",      "~> 1.8"
   s.add_runtime_dependency "archive-zip",   "~> 0.10"

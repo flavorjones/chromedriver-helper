@@ -99,11 +99,17 @@ module Chromedriver
 
     def platform
       cfg = RbConfig::CONFIG
-      case cfg['host_os']
+      host_cpu = cfg["host_cpu"]
+      host_os = cfg["host_os"]
+
+      case host_os
       when /linux/ then
-        cfg['host_cpu'] =~ /x86_64|amd64/ ? "linux64" : "linux32"
+        host_cpu =~ /x86_64|amd64/ ? "linux64" : "linux32"
       when /darwin/ then "mac"
-      else "win"
+      when /mswin/ then "win"
+      when /mingw/ then "win"
+      else
+        raise("Unsupported host OS '#{host_os}'")
       end
     end
   end

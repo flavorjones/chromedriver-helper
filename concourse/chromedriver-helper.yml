@@ -13,9 +13,8 @@ resources:
       branch: master
       ignore_paths:
         - concourse/**
-
-% ruby_version = RUBIES[:mri].last
 jobs:
+% RUBIES[:mri].last(2).each do |ruby_version|
   - name: ruby-<%= ruby_version %>
     public: true
     plan:
@@ -33,8 +32,9 @@ jobs:
             - name: chromedriver-helper
           run:
             path: ci/concourse/tasks/rake-test/run.sh
+% end
 
-% ruby_version = RUBIES[:windows].last
+% RUBIES[:windows].last(2).each do |ruby_version|
   - name: win-ruby-<%= ruby_version %>-devkit
     public: true
     plan:
@@ -52,3 +52,4 @@ jobs:
           run:
             path: powershell
             args: ["-File", "ci/concourse/tasks/rake-test/run.ps1"]
+% end

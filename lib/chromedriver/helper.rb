@@ -39,9 +39,7 @@ module Chromedriver
     end
 
     def update(version = nil)
-      if version
-        @download_version = version
-      end
+      @download_version = version || google_code_parser.newest_download_version.to_s
 
       hit_network = (current_version != download_version) ? true : false
       download(hit_network)

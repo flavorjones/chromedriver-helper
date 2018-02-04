@@ -13,6 +13,7 @@ Bug fixes:
 
 * Use `https` for the URL used to download. [#41] (Thanks, @saraid!)
 * Better platform detection, no longer run Windows on unrecognized platforms. [#49] (Thanks, @duncan-bayne!)
+* `chromedriver-update` without a version specified will update to the latest version available on the internets. [#47]
 
 
 

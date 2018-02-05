@@ -6,7 +6,7 @@ chromedriver-helper changelog
 
 Dependencies:
 
-* Bump dependencies on `nokogiri` and `archive-zip. (Thanks, @odlp and @ksylvest!)
+* Bump dependencies on `nokogiri` and `archive-zip`. (Thanks, @odlp and @ksylvest!)
 
 
 Bug fixes:

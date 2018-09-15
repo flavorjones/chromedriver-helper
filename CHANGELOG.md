@@ -1,6 +1,17 @@
 chromedriver-helper changelog
 ==========
 
+2.0.0 - 2019-09-15
+----------
+
+**Backwards-incompatible change:**
+
+The shadow executable `chromedriver` has been renamed to `chromedriver-helper` to work around issues with projects _not_ using the gem on a system on which the gem is installed. See [#57](https://github.com/flavorjones/chromedriver-helper/issues/57) for details.
+
+Many thanks to Miklós Fazekas (@mfazekas) for both reporting the issue and submitting the fix.
+
+
+
 1.2.0 - 2018-02-03
 ----------
 

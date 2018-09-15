@@ -59,9 +59,38 @@ Or, from the command line, you can choose a system-wide default:
 The code lives at [http://github.com/flavorjones/chromedriver-helper](http://github.com/flavorjones/chromedriver-helper). Open a Github Issue, or send a pull request! Thanks! You're the best.
 
 
+# Known Issues
+
+## `chromedriver-helper` affects other projects on my system
+
+v1.2.0 and earlier installed an executable named `chromedriver`, which may cause confusion for apps on your system that are _not_ using `chromedriver-helper`. v2.0.0 and later do not cause this problem.
+
+The common symptom is an error message that looks like this:
+
+```
+Selenium::WebDriver::Error::WebDriverError: unable to connect to chromedriver 127.0.0.1:9515
+```
+
+First, confirm that we're talking about the same thing by running:
+
+``` sh
+bundle exec ruby -e "system('chromedriver -v')"
+```
+
+and making sure you see something like:
+
+```
+.../rubygems_integration.rb:462:in `block in replace_bin_path': can't find executable chromedriver for gem chromedriver-helper (Gem::Exception)
+```
+
+If you see this message, then **uninstall all versions of `chromedriver-helper` prior to v2.0.0**; and make sure your other projects have updated to v2.0.0 or later.
+
+(You can read more about this issue at https://github.com/flavorjones/chromedriver-helper/issues/57.)
+
+
 ## CentOS 6 and 7
 
-Apparently some versions of `chromedriver` won't run on CentOS 6 and 7, due to the [problems explained here](https://chrome.richardlloyd.org.uk/). The error messages look something like:
+Some versions of `chromedriver` won't run on CentOS 6 and 7 due to the [problems explained here](https://chrome.richardlloyd.org.uk/). The error messages look something like:
 
 ```
 chromedriver: /usr/lib64/libstdc++.so.6: version `GLIBCXX_3.4.15' not found (required by /home/vagrant/.chromedriver-helper/linux64/chromedriver)

@@ -1,24 +1,17 @@
-# chromedriver-helper
+# [chromedriver-helper](http://github.com/flavorjones/chromedriver-helper)
 
-[![Build status](https://api.travis-ci.org/flavorjones/chromedriver-helper.svg)](https://travis-ci.org/flavorjones/chromedriver-helper)
+[![Concourse CI](https://ci.nokogiri.org/api/v1/teams/nokogiri-core/pipelines/chromedriver-helper/jobs/ruby-2.5/badge)](https://ci.nokogiri.org/teams/nokogiri-core/pipelines/chromedriver-helper)
 
-Easy installation and use of [chromedriver](https://sites.google.com/a/chromium.org/chromedriver/), the Chromium project's
-selenium webdriver adapter.
-
-* [http://github.com/flavorjones/chromedriver-helper](http://github.com/flavorjones/chromedriver-helper)
+Easy installation and use of [`chromedriver`](https://sites.google.com/a/chromium.org/chromedriver/), the Chromium project's Selenium webdriver adapter.
 
 
 # Description
 
-`chromedriver-helper` installs an executable, `chromedriver`, in your
-gem path.
+`chromedriver-helper` installs an executable, `chromedriver-helper`, in your gem path, and configures Selenium to invoke it as the web driver.
 
-This script will, if necessary, download the appropriate binary for
-your platform and install it into `~/.chromedriver-helper`, then exec
-it. Easy peasy!
+This script will, if necessary, download the appropriate binary for your platform and install it into `~/.chromedriver-helper`, then exec it. Easy peasy!
 
-chromedriver is fast. By my unscientific benchmark, it's around 20%
-faster than webdriver + Firefox 8. You should use it!
+Individual projects can even select which version of `chromedriver` they want to run.
 
 
 # Usage
@@ -35,41 +28,69 @@ then, in your specs:
     end
 
 
+# Updating to latest `chromedriver`
+
+You can always update to the latest version of `chromedriver`:
+
+    chromedriver-update
+
+
+## Having problems updating?
+
+If for whatever reason you're having problems getting `chromedriver-helper` to update to the latest `chromedriver`, try this:
+
+1. Delete the directory `$HOME/.chromedriver-helper`
+2. Run `chromedriver-update`
+
+
 # Specifying a version
 
-If you want to run a specific version of chromedriver, you can set the version like so:
+If you want to run a specific version of `chromedriver` in your project, you can set the version in you testing setup like so:
 
     Chromedriver.set_version "2.24"
 
-Or, from the command line, you can run
+Or, from the command line, you can choose a system-wide default:
 
     chromedriver-update 2.24
 
 
-# Updating to latest Chromedriver
-
-If you'd like to force-upgrade to the latest version of chromedriver:
-
-1. delete the directory `$HOME/.chromedriver-helper`
-2. run `chromedriver-update`
-
-This might be necessary on platforms on which Chrome auto-updates,
-which has been known to introduce incompatibilities with older
-versions of chromedriver (see
-[Issue #3](https://github.com/flavorjones/chromedriver-helper/issues/3)
-for an example).
-
-
 # Support
 
-The code lives at
-[http://github.com/flavorjones/chromedriver-helper](http://github.com/flavorjones/chromedriver-helper).
-Open a Github Issue, or send a pull request! Thanks! You're the best.
+The code lives at [http://github.com/flavorjones/chromedriver-helper](http://github.com/flavorjones/chromedriver-helper). Open a Github Issue, or send a pull request! Thanks! You're the best.
+
+
+# Known Issues
+
+## `chromedriver-helper` affects other projects on my system
+
+v1.2.0 and earlier installed an executable named `chromedriver`, which may cause confusion for apps on your system that are _not_ using `chromedriver-helper`. v2.0.0 and later do not cause this problem.
+
+The common symptom is an error message that looks like this:
+
+```
+Selenium::WebDriver::Error::WebDriverError: unable to connect to chromedriver 127.0.0.1:9515
+```
+
+First, confirm that we're talking about the same thing by running:
+
+``` sh
+bundle exec ruby -e "system('chromedriver -v')"
+```
+
+and making sure you see something like:
+
+```
+.../rubygems_integration.rb:462:in `block in replace_bin_path': can't find executable chromedriver for gem chromedriver-helper (Gem::Exception)
+```
+
+If you see this message, then **uninstall all versions of `chromedriver-helper` prior to v2.0.0**; and make sure your other projects have updated to v2.0.0 or later.
+
+(You can read more about this issue at https://github.com/flavorjones/chromedriver-helper/issues/57.)
 
 
 ## CentOS 6 and 7
 
-Apparently recent versions of `chromedriver` won't run on CentOS 6 and 7, due to the [problems explained here](https://chrome.richardlloyd.org.uk/). The error messages look something like:
+Some versions of `chromedriver` won't run on CentOS 6 and 7 due to the [problems explained here](https://chrome.richardlloyd.org.uk/). The error messages look something like:
 
 ```
 chromedriver: /usr/lib64/libstdc++.so.6: version `GLIBCXX_3.4.15' not found (required by /home/vagrant/.chromedriver-helper/linux64/chromedriver)
@@ -81,10 +102,9 @@ chromedriver: /usr/lib64/libstdc++.so.6: version `GLIBCXX_3.4.14' not found (req
 You can get `chromedriver` to work on these systems by running the `install_chrome.sh` script on the page linked to above, and then making sure your `chromedriver` process has `LD_LIBRARY_PATH` set so that `/opt/google/chrome/lib` is present, e.g.
 
 ```
-$ LD_LIBRARY_PATH=/opt/google/chrome/lib chromedriver
+$ LD_LIBRARY_PATH=/opt/google/chrome/lib chromedriver-helper
 Starting ChromeDriver 2.28.455506 (18f6627e265f442aeec9b6661a49fe819aeeea1f) on port 9515
 Only local connections are allowed.
-
 ```
 
 # License
@@ -94,9 +114,6 @@ MIT licensed, see LICENSE.txt for full details.
 
 # Credit
 
-The idea for this gem comes from @brianhempel's project
-`chromedriver-gem` which, despite the name, is not currently published
-on http://rubygems.org/.
+The idea for this gem comes from @brianhempel's project `chromedriver-gem` which, despite the name, is not currently published on http://rubygems.org/.
 
-Some improvements on the idea were taken from the installation process
-for standalone Phusion Passenger.
+Some improvements on the idea were taken from the installation process for standalone Phusion Passenger.

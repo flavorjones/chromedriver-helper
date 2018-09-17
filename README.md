@@ -16,9 +16,12 @@ Individual projects can even select which version of `chromedriver` they want to
 
 # Usage
 
-If you're using Bundler and Capybara, it's as easy as:
+## In a Rails project
+
+If you're using Bundler and Capybara in a Rails project, it's as easy as:
 
     # Gemfile
+    gem "selenium-webdriver"
     gem "chromedriver-helper"
 
 then, in your specs:
@@ -26,6 +29,20 @@ then, in your specs:
     Capybara.register_driver :selenium do |app|
       Capybara::Selenium::Driver.new(app, :browser => :chrome)
     end
+
+
+## Standalone
+
+If you're using it standlone just to manage chromedriver binaries,
+
+    # Gemfile
+    gem "chromedriver-helper"
+
+Then just run the executable script:
+
+    chromedriver-helper
+
+which will download `chromedriver` if necessary and exec it.
 
 
 # Updating to latest `chromedriver`

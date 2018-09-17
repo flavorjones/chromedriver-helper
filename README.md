@@ -20,15 +20,19 @@ Individual projects can even select which version of `chromedriver` they want to
 
 If you're using Bundler and Capybara in a Rails project, it's as easy as:
 
-    # Gemfile
-    gem "selenium-webdriver"
-    gem "chromedriver-helper"
+``` ruby
+# Gemfile
+gem "selenium-webdriver"
+gem "chromedriver-helper"
+```
 
-then, in your specs:
+then, in your spec setup:
 
-    Capybara.register_driver :selenium do |app|
-      Capybara::Selenium::Driver.new(app, :browser => :chrome)
-    end
+``` ruby
+Capybara.register_driver :selenium do |app|
+  Capybara::Selenium::Driver.new(app, :browser => :chrome)
+end
+```
 
 
 ## Standalone
@@ -43,6 +47,32 @@ Then just run the executable script:
     chromedriver-helper
 
 which will download `chromedriver` if necessary and exec it.
+
+
+# Configuration
+
+There are some commandline options that can be sent to `chromedriver` as options to `Capybara::Selenium::Driver.new`. The supported options can be discovered by looking at the Selenium source code here:
+
+    https://github.com/SeleniumHQ/selenium/blob/master/rb/lib/selenium/webdriver/chrome/service.rb
+
+As of this writing, the supported options are:
+
+* `log_path`
+* `url_base`
+* `port_server`
+* `whitelisted_ips`
+* `verbose`
+* `silent`
+
+An example usage would be:
+
+``` ruby
+Capybara::Selenium::Driver.new(app, browser: :chrome,
+  driver_opts: {
+    log_path: '/tmp/chrome.log',
+    verbose: true
+  })
+```
 
 
 # Updating to latest `chromedriver`

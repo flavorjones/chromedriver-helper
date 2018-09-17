@@ -6,7 +6,7 @@ chromedriver-helper changelog
 
 Bug fix:
 
-* Explicitly require 'selenium-webdriver' for projects who don't have the default Rails ordering in their Gemfile. [#60](https://github.com/flavorjones/chromedriver-helper/issues/60)
+* Explicitly require 'selenium-webdriver' for projects who don't have the default Rails ordering in their Gemfile. [#60](https://github.com/flavorjones/chromedriver-helper/issues/60) (Thanks, @mattbrictson!)
 
 
 2.0.0 - 2019-09-15

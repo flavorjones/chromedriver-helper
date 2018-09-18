@@ -8,7 +8,7 @@ describe Chromedriver::Helper::GoogleCodeParser do
         when "https://chromedriver.storage.googleapis.com/LATEST_RELEASE"
           StringIO.new("2.42")
         when "https://chromedriver.storage.googleapis.com"
-          File.read(File.join(File.dirname(__FILE__), "assets/google-code-bucket.xml"))
+          StringIO.new(File.read(File.join(File.dirname(__FILE__), "assets/google-code-bucket.xml")))
         end
       end
     end

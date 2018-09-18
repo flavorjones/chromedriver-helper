@@ -12,7 +12,7 @@ module Chromedriver
       def initialize(platform, open_uri_provider=OpenURI)
         @platform = platform
         @source = open_uri_provider.open_uri(BUCKET_URL)
-        @newest_download_version = Gem::Version.new(open_uri_provider.open_uri(URI.join(BUCKET_URL, 'LATEST_RELEASE')).read)
+        @newest_download_version = Gem::Version.new(open_uri_provider.open_uri(URI.join(BUCKET_URL, "LATEST_RELEASE")).read)
       end
 
       def downloads

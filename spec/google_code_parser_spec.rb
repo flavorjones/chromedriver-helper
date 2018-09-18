@@ -5,7 +5,7 @@ describe Chromedriver::Helper::GoogleCodeParser do
     double("open_uri_provider").tap do |oup|
       allow(oup).to receive(:open_uri) do |uri|
         case uri.to_s
-        when 'https://chromedriver.storage.googleapis.com/LATEST_RELEASE'
+        when "https://chromedriver.storage.googleapis.com/LATEST_RELEASE"
           StringIO.new("2.42")
         when "https://chromedriver.storage.googleapis.com"
           File.read(File.join(File.dirname(__FILE__), "assets/google-code-bucket.xml"))

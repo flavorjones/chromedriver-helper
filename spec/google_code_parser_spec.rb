@@ -7,7 +7,7 @@ describe Chromedriver::Helper::GoogleCodeParser do
         case uri.to_s
         when 'https://chromedriver.storage.googleapis.com/LATEST_RELEASE'
           StringIO.new("2.42")
-        else
+        when "https://chromedriver.storage.googleapis.com"
           File.read(File.join(File.dirname(__FILE__), "assets/google-code-bucket.xml"))
         end
       end

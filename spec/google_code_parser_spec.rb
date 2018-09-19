@@ -30,21 +30,6 @@ describe Chromedriver::Helper::GoogleCodeParser do
     it "returns the last URL for the platform" do
       expect(parser.newest_download_version).to eq Gem::Version.new("2.42")
     end
-
-    context "out-of-order versions" do
-      before do
-        allow(parser).to receive(:downloads).and_return([
-          "https://chromedriver.storage.googleapis.com/2.3/chromedriver_mac32.zip",
-          "https://chromedriver.storage.googleapis.com/2.4/chromedriver_mac32.zip",
-          "https://chromedriver.storage.googleapis.com/2.14/chromedriver_mac32.zip",
-          "https://chromedriver.storage.googleapis.com/2.2/chromedriver_mac32.zip",
-        ])
-      end
-
-      it "returns the newest version" do
-        expect(parser.newest_download_version).to eq(Gem::Version.new("2.42"))
-      end
-    end
   end
 
   describe '#version_download_url' do

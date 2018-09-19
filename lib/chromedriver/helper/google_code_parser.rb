@@ -1,16 +1,18 @@
 require 'nokogiri'
 require 'open-uri'
+require 'uri'
 
 module Chromedriver
   class Helper
     class GoogleCodeParser
       BUCKET_URL = 'https://chromedriver.storage.googleapis.com'
 
-      attr_reader :source, :platform
+      attr_reader :source, :platform, :newest_download_version
 
       def initialize(platform, open_uri_provider=OpenURI)
         @platform = platform
         @source = open_uri_provider.open_uri(BUCKET_URL)
+        @newest_download_version = Gem::Version.new(open_uri_provider.open_uri(URI.join(BUCKET_URL, "LATEST_RELEASE")).read)
       end
 
       def downloads
@@ -20,10 +22,6 @@ module Chromedriver
           items.reject! {|k| !(/chromedriver_#{platform}/===k) }
           items.map {|k| "#{BUCKET_URL}/#{k}"}
         end
-      end
-
-      def newest_download_version
-        @newest_download_version ||= downloads.map { |download| version_of(download) }.max
       end
 
       def version_download_url(version)

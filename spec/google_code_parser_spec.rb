@@ -3,7 +3,14 @@ require "spec_helper"
 describe Chromedriver::Helper::GoogleCodeParser do
   let!(:open_uri_provider) do
     double("open_uri_provider").tap do |oup|
-      allow(oup).to receive(:open_uri) { File.read(File.join(File.dirname(__FILE__), "assets/google-code-bucket.xml")) }
+      allow(oup).to receive(:open_uri) do |uri|
+        case uri.to_s
+        when "https://chromedriver.storage.googleapis.com/LATEST_RELEASE"
+          StringIO.new("2.42")
+        when "https://chromedriver.storage.googleapis.com"
+          StringIO.new(File.read(File.join(File.dirname(__FILE__), "assets/google-code-bucket.xml")))
+        end
+      end
     end
   end
   let!(:parser) { Chromedriver::Helper::GoogleCodeParser.new('mac', open_uri_provider) }
@@ -21,22 +28,7 @@ describe Chromedriver::Helper::GoogleCodeParser do
 
   describe "#newest_download_version" do
     it "returns the last URL for the platform" do
-      expect(parser.newest_download_version).to eq Gem::Version.new("2.4")
-    end
-
-    context "out-of-order versions" do
-      before do
-        allow(parser).to receive(:downloads).and_return([
-          "https://chromedriver.storage.googleapis.com/2.3/chromedriver_mac32.zip",
-          "https://chromedriver.storage.googleapis.com/2.4/chromedriver_mac32.zip",
-          "https://chromedriver.storage.googleapis.com/2.14/chromedriver_mac32.zip",
-          "https://chromedriver.storage.googleapis.com/2.2/chromedriver_mac32.zip",
-        ])
-      end
-
-      it "returns the newest version" do
-        expect(parser.newest_download_version).to eq(Gem::Version.new("2.14"))
-      end
+      expect(parser.newest_download_version).to eq Gem::Version.new("2.42")
     end
   end
 

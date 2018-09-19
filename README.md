@@ -13,6 +13,14 @@ This script will, if necessary, download the appropriate binary for your platfor
 
 Individual projects can even select which version of `chromedriver` they want to run.
 
+Make sure the gem is being required in order to configure the `Selenium::WebDriver::Chrome.driver_path`:
+
+``` ruby
+require "chromedriver-helper"
+```
+
+Otherwise you may see failures like "unable to connect to chromedriver 127.0.0.1:9515 (Selenium::WebDriver::Error::WebDriverError)" when Selenium runs the wrong executable.
+
 
 # Usage
 

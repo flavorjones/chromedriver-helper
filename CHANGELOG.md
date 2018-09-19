@@ -1,6 +1,18 @@
 chromedriver-helper changelog
 ==========
 
+2.1.0 - 2018-09-18
+----------
+
+Enhancement:
+
+* Use the `LATEST_RELEASE` file to determine the newest version, to avoid downloading the experimental versions the Chrome team is posting recently. [#62](https://github.com/flavorjones/chromedriver-helper/issues/62) (Thanks, @ibrahima!)
+
+Bug fix:
+
+* `lib/chromedriver-helper.rb` explicitly requires `chromedriver/helper` to avoid "uninitialized constant Chromedriver" exception when calling `Chromedriver.set_version` in a default-configured Rails app. [#65](https://github.com/flavorjones/chromedriver-helper/issues/65)
+
+
 2.0.1 - 2019-09-17
 ----------
 

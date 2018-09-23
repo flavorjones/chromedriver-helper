@@ -16,8 +16,11 @@ module Chromedriver
       exec binary_path, *args
     end
 
-    def download(hit_network = false)
-      return if File.exist?(binary_path) && !hit_network
+    def download
+      if File.exist?(binary_path) && current_version == download_version
+        puts "Version #{current_version} already installed"
+        return
+      end
 
       raise "Version not found for #{download_version}" unless download_url
 
@@ -39,10 +42,8 @@ module Chromedriver
     end
 
     def update(version = nil)
-      @download_version = version || google_code_parser.newest_download_version.to_s
-
-      hit_network = (current_version != download_version) ? true : false
-      download(hit_network)
+      @download_version = version || newest_download_version
+      download
     end
 
     def current_version
@@ -52,7 +53,7 @@ module Chromedriver
     end
 
     def download_version
-      @download_version ||= current_version || google_code_parser.newest_download_version.to_s
+      @download_version ||= current_version || newest_download_version
     end
 
     def download_url
@@ -61,6 +62,10 @@ module Chromedriver
 
     def google_code_parser
       @google_code_parser ||= GoogleCodeParser.new(platform)
+    end
+
+    def newest_download_version
+      @newest_download_version ||= google_code_parser.newest_download_version.to_s
     end
 
     def version_path

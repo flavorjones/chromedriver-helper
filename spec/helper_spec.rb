@@ -1,7 +1,11 @@
 require "spec_helper"
 
 describe Chromedriver::Helper do
+  before do
+    allow(helper).to receive(:newest_download_version).and_return(newest_download_version)
+  end
   let(:helper) { Chromedriver::Helper.new }
+  let(:newest_download_version) { '1.2.3' }
 
   describe "#binary_path" do
     context "on a linux platform" do
@@ -12,6 +16,24 @@ describe Chromedriver::Helper do
     context "on a windows platform" do
       before { allow(helper).to receive(:platform) { "win" } }
       it { expect(helper.binary_path).to match(/chromedriver\.exe$/) }
+    end
+  end
+
+  describe '#download' do
+    before do
+      $stdout = StringIO.new
+    end
+
+    context 'when the download_version is installed' do
+      before do
+        allow(File).to receive(:exist?).and_return(true)
+        allow(helper).to receive(:current_version).and_return(newest_download_version)
+      end
+
+      it 'outputs a message' do
+        helper.download
+        expect($stdout.string).to include("already installed")
+      end
     end
   end
 
@@ -38,6 +60,29 @@ describe Chromedriver::Helper do
 
         it "returns #{expected_platform}" do
           expect(helper.platform).to eq(expected_platform)
+        end
+      end
+    end
+
+    describe '#update' do
+      before do
+        allow(helper).to receive(:download).and_return(nil)
+      end
+      let(:version) { '1.0.0' }
+
+      context 'when a version is given' do
+        it 'sets @download_version as given' do
+          expect(helper.instance_variable_get(:@download_version)).to eql(nil)
+          helper.update(version)
+          expect(helper.instance_variable_get(:@download_version)).to eql(version)
+        end
+      end
+
+      context 'when no version is given' do
+        it 'sets @download_version as newest' do
+          expect(helper.instance_variable_get(:@download_version)).to eql(nil)
+          helper.update
+          expect(helper.instance_variable_get(:@download_version)).to eql(newest_download_version)
         end
       end
     end

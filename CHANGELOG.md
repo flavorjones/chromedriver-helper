@@ -13,7 +13,7 @@ Bug fix:
 * `lib/chromedriver-helper.rb` explicitly requires `chromedriver/helper` to avoid "uninitialized constant Chromedriver" exception when calling `Chromedriver.set_version` in a default-configured Rails app. [#65](https://github.com/flavorjones/chromedriver-helper/issues/65)
 
 
-2.0.1 - 2019-09-17
+2.0.1 - 2018-09-17
 ----------
 
 Bug fix:
@@ -21,7 +21,7 @@ Bug fix:
 * Explicitly require 'selenium-webdriver' for projects who don't have the default Rails ordering in their Gemfile. [#60](https://github.com/flavorjones/chromedriver-helper/issues/60) (Thanks, @mattbrictson!)
 
 
-2.0.0 - 2019-09-15
+2.0.0 - 2018-09-15
 ----------
 
 **Backwards-incompatible change:**

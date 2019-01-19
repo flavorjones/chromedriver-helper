@@ -1,9 +1,8 @@
-# TODO update to new resource
 resource_types:
 - name: pull-request
   type: docker-image
   source:
-    repository: jtarchie/pr
+    repository: teliaoss/github-pr-resource
 
 resources:
   - name: ci
@@ -13,14 +12,16 @@ resources:
       branch: master
       disable_ci_skip: true # always get the latest pipeline configuration
 
-# TODO update to new resource
+# TODO add a webhook
+# - https://concourse-ci.org/resources.html#resource-webhook-token
+# - https://github.com/flavorjones/chromedriver-helper/settings/hooks
   - name: chromedriver-helper-pr
     type: pull-request
     source:
-      repo: flavorjones/chromedriver-helper
+      repository: flavorjones/chromedriver-helper
       access_token: {{github-repo-status-access-token}}
       ignore_paths:
-        - concourse/**
+        - concourse/
 
 % ruby_version = RUBIES[:mri].last
 jobs:
@@ -32,7 +33,7 @@ jobs:
         trigger: true
         version: every
       - put: chromedriver-helper-pr
-        params: {path: chromedriver-helper-pr, status: pending}
+        params: {path: chromedriver-helper-pr, status: PENDING}
 
   - name: ruby-<%= ruby_version %>
     public: true
@@ -57,7 +58,7 @@ jobs:
             path: ci/concourse/tasks/rake-test/run.sh
         on_failure:
           put: chromedriver-helper-pr
-          params: {path: chromedriver-helper-pr, status: failure}
+          params: {path: chromedriver-helper-pr, status: FAILURE}
 
   - name: pr-success
     public: true
@@ -69,4 +70,4 @@ jobs:
         passed:
         - ruby-<%= ruby_version %>
       - put: chromedriver-helper-pr
-        params: {path: chromedriver-helper-pr, status: success}
+        params: {path: chromedriver-helper-pr, status: SUCCESS}

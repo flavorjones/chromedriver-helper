@@ -6,4 +6,4 @@ RSpec::Core::RakeTask.new(:spec)
 
 task :default => :spec
 
-Concourse.new("chromedriver-helper").create_tasks!
+Concourse.new("chromedriver-helper", fly_target: "flavorjones").create_tasks!

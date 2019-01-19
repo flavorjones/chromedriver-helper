@@ -1,8 +1,7 @@
 *.gem
 .bundle
-Gemfile.lock
-pkg/*
-chromedriver.log
 .tags
+Gemfile.lock
+chromedriver.log
 concourse/private.yml
-concourse/chromedriver-helper.final.yml
+pkg/*

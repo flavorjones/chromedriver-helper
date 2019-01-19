@@ -17,6 +17,9 @@ resources:
 # - https://github.com/flavorjones/chromedriver-helper/settings/hooks
   - name: chromedriver-helper-pr
     type: pull-request
+    check_every: 15m
+    # webhook: https://ci.nokogiri.org/api/v1/teams/flavorjones/pipelines/chromedriver-helper-pr/resources/chromedriver-helper-pr/check/webhook?webhook_token=WEBHOOK_TOKEN
+    webhook_token: ((chromedriver-helper-pr-webhook-token))
     source:
       repository: flavorjones/chromedriver-helper
       access_token: {{github-repo-status-access-token}}

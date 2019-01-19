@@ -1,3 +1,8 @@
+anchors:
+  notify_failure_to_pr: &notify_failure_to_pr
+    put: chromedriver-helper-pr
+    params: {path: chromedriver-helper-pr, status: FAILURE}
+
 resource_types:
 - name: pull-request
   type: docker-image
@@ -26,7 +31,6 @@ resources:
       ignore_paths:
         - concourse/
 
-% ruby_version = RUBIES[:mri].last
 jobs:
   - name: pr-pending
     public: true
@@ -38,6 +42,7 @@ jobs:
       - put: chromedriver-helper-pr
         params: {path: chromedriver-helper-pr, status: PENDING}
 
+% RUBIES[:mri].last(2).each do |ruby_version|
   - name: ruby-<%= ruby_version %>
     public: true
     max_in_flight: 1
@@ -59,9 +64,36 @@ jobs:
               path: chromedriver-helper
           run:
             path: ci/concourse/tasks/rake-test/run.sh
-        on_failure:
-          put: chromedriver-helper-pr
-          params: {path: chromedriver-helper-pr, status: FAILURE}
+        on_failure: *notify_failure_to_pr
+% end
+
+% RUBIES[:jruby].last(1).each do |ruby_version|
+  - name: jruby-<%= ruby_version %>
+    public: true
+    max_in_flight: 1
+    plan:
+      - get: ci
+      - get: chromedriver-helper-pr
+        trigger: true
+        version: every
+        passed: [pr-pending]
+      - task: rake-test
+        attempts: 3
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source: {repository: jruby, tag: "<%= ruby_version %>-jdk"}
+          inputs:
+            - name: ci
+            - name: chromedriver-helper-pr
+              path: chromedriver-helper
+          params:
+            JAVA_OPTS: "-Dfile.encoding=UTF8" # https://github.com/docker-library/openjdk/issues/32
+          run:
+            path: ci/concourse/tasks/rake-test/run.sh
+        on_failure: *notify_failure_to_pr
+% end
 
   - name: pr-success
     public: true
@@ -71,6 +103,11 @@ jobs:
         trigger: true
         version: every
         passed:
+% RUBIES[:mri].last(2).each do |ruby_version|
         - ruby-<%= ruby_version %>
+% end
+% RUBIES[:jruby].last(1).each do |ruby_version|
+        - jruby-<%= ruby_version %>
+% end
       - put: chromedriver-helper-pr
         params: {path: chromedriver-helper-pr, status: SUCCESS}

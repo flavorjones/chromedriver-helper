@@ -17,9 +17,6 @@ resources:
       branch: master
       disable_ci_skip: true # always get the latest pipeline configuration
 
-# TODO add a webhook
-# - https://concourse-ci.org/resources.html#resource-webhook-token
-# - https://github.com/flavorjones/chromedriver-helper/settings/hooks
   - name: chromedriver-helper-pr
     type: pull-request
     check_every: 15m

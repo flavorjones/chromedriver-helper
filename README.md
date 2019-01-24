@@ -1,6 +1,6 @@
 # [chromedriver-helper](http://github.com/flavorjones/chromedriver-helper)
 
-[![Concourse CI](https://ci.nokogiri.org/api/v1/teams/nokogiri-core/pipelines/chromedriver-helper/jobs/ruby-2.5/badge)](https://ci.nokogiri.org/teams/nokogiri-core/pipelines/chromedriver-helper)
+[![Concourse CI](https://ci.nokogiri.org/api/v1/teams/flavorjones/pipelines/chromedriver-helper/jobs/ruby-2.6/badge)](https://ci.nokogiri.org/teams/flavorjones/pipelines/chromedriver-helper)
 
 Easy installation and use of [`chromedriver`](https://sites.google.com/a/chromium.org/chromedriver/), the Chromium project's Selenium webdriver adapter.
 

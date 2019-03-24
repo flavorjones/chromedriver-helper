@@ -1,6 +1,15 @@
 chromedriver-helper changelog
 ==========
 
+2.1.1 - 2019-03-24
+----------
+
+Final release of chromedriver-helper.
+
+This gem is being deprecated as of 2019-03-31 in favor of the `webdrivers` gem. See https://github.com/flavorjones/chromedriver-helper/issues/83 for details.
+
+
+
 2.1.0 - 2018-09-18
 ----------
 

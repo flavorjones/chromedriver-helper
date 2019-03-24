@@ -1,3 +1,11 @@
+# NOTICE: This gem is out of support as of 2019-03-31
+
+## Please use https://github.com/titusfortner/webdrivers instead.
+
+See https://github.com/flavorjones/chromedriver-helper/issues/83 for details.
+
+----
+
 # [chromedriver-helper](http://github.com/flavorjones/chromedriver-helper)
 
 [![Concourse CI](https://ci.nokogiri.org/api/v1/teams/flavorjones/pipelines/chromedriver-helper/jobs/ruby-2.6/badge)](https://ci.nokogiri.org/teams/flavorjones/pipelines/chromedriver-helper)
